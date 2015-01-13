@@ -22,13 +22,15 @@ app.set('port', port);
 var server = http.createServer(app);
 
 var io = require('socket.io')(server);
-var image_search = require('google-images');
+var google = require('google-images');
 io.on('connection', function(socket){
   socket.on('search:query', function(query){
     console.log('searching', query);
-    image_search query, function(err, images){
-      console.log(images);
-    }
+    google.search(query, function(err, images){
+      if (err != null){
+        socket.emit('search:result', images);
+      }
+    });
   });
 
 });

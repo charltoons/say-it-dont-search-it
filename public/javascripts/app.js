@@ -91,6 +91,7 @@ var ignore_onend;
 // var start_timestamp;
 if (!('webkitSpeechRecognition' in window)) {
   // You're browser does not support webspeech
+  alert('Your browser does not support the necessary Speech features.')
   console.error('Your browser does not support WebSpeech');
 } else {
 
@@ -162,8 +163,24 @@ if (!('webkitSpeechRecognition' in window)) {
 }
 
 socket.on('search:result', function(results){
+  var images = document.getElementById('images');
+  images.innerHTML = '';
+  for (var i=0; i<results.length; i++){
+    var node = document.createElement("img");
+    var a = document.createAttribute("src");
+    a.value = results[i].unescapedUrl;
+    node.setAttributeNode(a);
+    images.appendChild(node);
+  }
 
 });
+
+document.onreadystatechange = function () {
+  if (document.readyState == "complete") {
+    socket.emit('search:query', 'elephant');
+    console.log('elephand');
+  }
+}
 
 // var two_line = /\n\n/g;
 // var one_line = /\n/g;

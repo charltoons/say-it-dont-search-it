@@ -75,3 +75,13 @@ a:hover {
   background-color:transparent;
   padding: 0;
 }
+
+#images {
+  width: 100%;
+}
+
+#images img {
+  display: inline-block;
+  width: 300px;
+  height: auto;
+}
